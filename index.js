@@ -96,9 +96,15 @@ O que você quer ver?`,
         break;
 
       case 'videos':
-        await bot.sendMessage(
-          chatId,
-          `🔥 PACK MAIS ESCOLHIDO
+
+  await bot.sendAnimation(
+    chatId,
+    path.join(__dirname, '5s.gif')
+  );
+
+  await bot.sendMessage(
+    chatId,
+    `🔥 PACK MAIS ESCOLHIDO
 
 📸 Fotos exclusivas
 🎥 Vídeos completos
@@ -111,20 +117,26 @@ O que você quer ver?`,
 💰 Apenas R$12,90
 
 👇 Desbloqueie agora`,
-          {
-            reply_markup: {
-              inline_keyboard: [
-                [{ text: '💳 Comprar', callback_data: 'comprar_videos' }]
-              ]
-            }
-          }
-        );
-        break;
+    {
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '💳 Comprar', callback_data: 'comprar_videos' }]
+        ]
+      }
+    }
+  );
+  break;
 
-      case 'videochamada':
-        await bot.sendMessage(
-          chatId,
-          `📹 Videochamada Particular
+case 'videochamada':
+
+  await bot.sendAnimation(
+    chatId,
+    path.join(__dirname, '5s.gif')
+  );
+
+  await bot.sendMessage(
+    chatId,
+    `📹 Videochamada Particular
 
 ⚡️ Poucos horários disponíveis hoje
 😏 Acesso individual e exclusivo
@@ -132,20 +144,26 @@ O que você quer ver?`,
 💰 R$15,90
 
 Reserve antes que as vagas acabem 👇`,
-          {
-            reply_markup: {
-              inline_keyboard: [
-                [{ text: '💳 Comprar', callback_data: 'comprar_videochamada' }]
-              ]
-            }
-          }
-        );
-        break;
+    {
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '💳 Comprar', callback_data: 'comprar_videochamada' }]
+        ]
+      }
+    }
+  );
+  break;
 
-      case 'vip':
-        await bot.sendMessage(
-          chatId,
-          `💎 VIP Vitalício + WhatsApp
+case 'vip':
+
+  await bot.sendAnimation(
+    chatId,
+    path.join(__dirname, '5s.gif')
+  );
+
+  await bot.sendMessage(
+    chatId,
+    `💎 VIP Vitalício + WhatsApp
 
 ✔️ +600 mídias
 ✔️ Conteúdo novo todos os dias
@@ -156,16 +174,15 @@ Reserve antes que as vagas acabem 👇`,
 💰 R$18,90
 
 👇 Garanta seu acesso agora`,
-          {
-            reply_markup: {
-              inline_keyboard: [
-                [{ text: '💳 Comprar', callback_data: 'comprar_vip' }]
-              ]
-            }
-          }
-        );
-        break;
-
+    {
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '💳 Comprar', callback_data: 'comprar_vip' }]
+        ]
+      }
+    }
+  );
+  break;
       case 'comprar_videos':
         await criarPagamento(chatId, 12.90, '🎥 Vídeos e Fotos');
         break;

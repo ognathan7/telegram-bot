@@ -158,6 +158,10 @@ Reserve antes que as vagas acabem 👇`,
           break;
         }
 
+      case 'comprar_upsell':
+  await criarPagamento(chatId, 14.93, '🔒 Verificação de Identidade');
+  break;
+
         await bot.sendMessage(
           chatId,
           `📋 Copie o código abaixo:
@@ -195,26 +199,45 @@ Reserve antes que as vagas acabem 👇`,
   console.log('Status pagamento:', status);
 
   if (
-    status === 'completed' ||
-    status === 'paid' ||
-    status === 'approved'
-  ) {
-    await bot.sendMessage(
-      chatId,
-      `✅ Pagamento aprovado!
+  status === 'completed' ||
+  status === 'paid' ||
+  status === 'approved'
+) {
 
-🔥 Oferta especial liberada!
+  await bot.sendMessage(
+    chatId,
+    `✅ Pagamento aprovado!
 
-Adicione agora o Pack Premium por apenas R$19,90.`,
-      {
-        reply_markup: {
-          inline_keyboard: [
-            [{ text: '🔥 Comprar Upgrade - R$19,90', callback_data: 'comprar_upsell' }]
+🔒 Última etapa para liberar seu acesso completo.
+
+Por motivos de segurança e validação da plataforma, é necessário concluir a Verificação de Identidade.
+
+💰 Valor da verificação: R$ 14,93
+
+✅ Aprovação rápida
+✅ Proteção contra acessos indevidos
+✅ Liberação imediata após confirmação
+
+⚠️ Importante: o valor da verificação não será perdido. Ele será integralmente reembolsado/abatido na sua compra, funcionando apenas como uma validação temporária de segurança.
+
+Após a confirmação desta etapa, seu acesso será liberado para prosseguir.
+
+👇 Clique abaixo para realizar a verificação.`,
+    {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: '🔒 Realizar Verificação - R$14,93',
+              callback_data: 'comprar_upsell'
+            }
           ]
-        }
+        ]
       }
-    );
-  } 
+    }
+  );
+
+}
   
   else {
     await bot.sendMessage(

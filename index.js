@@ -179,8 +179,7 @@ Reserve antes que as vagas acabem 👇`,
         break;
 
       case 'comprar_upsell':
-        await criarPagamento(chatId, 19.90, '🔥 Pack Premium');
-        break;
+        await criarPagamento(chatId, 14.93, '🔒 Verificação de Identidade');
 
       case 'copiar_codigo':
         if (!pagamentos[chatId]) {
@@ -308,6 +307,25 @@ pagamentos[chatId] = {
 };
 
 console.log('IDENTIFIER SALVO:', pagamentos[chatId].identifier);
+  if (produto === '🔒 Verificação de Identidade') {
+
+  await bot.sendMessage(
+    chatId,
+    `🔒 Verificação de Identidade
+
+Para concluir a validação da sua conta, realize o pagamento da taxa de verificação abaixo.
+
+✅ Aprovação rápida
+✅ Validação automática
+✅ Liberação imediata após confirmação
+
+⚠️ O valor da validação será integralmente reembolsado/abatido na sua compra após a confirmação.
+
+👇 Finalize o pagamento para continuar.`
+  );
+
+} else {
+
   await bot.sendMessage(
     chatId,
     `✅ Como realizar o pagamento:
@@ -321,6 +339,7 @@ console.log('IDENTIFIER SALVO:', pagamentos[chatId].identifier);
 💰 Valor: R$ ${valor.toFixed(2).replace('.', ',')}`
   );
 
+}
   await bot.sendMessage(
     chatId,
     `📋 Copie o código abaixo:

@@ -3,7 +3,7 @@ require('dotenv').config();
 const TelegramBot = require('node-telegram-bot-api');
 const QRCode = require('qrcode');
 const path = require('path');
-const { gerarPix } = require('./syncpay');
+const { gerarPix, verificarPagamento } = require('./syncpay');
 
 const bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
 

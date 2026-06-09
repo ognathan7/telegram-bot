@@ -182,25 +182,52 @@ Reserve antes que as vagas acabem 👇`,
       case 'verificar_pagamento':
 
   if (!pagamentos[chatId]) {
-    await bot.sendMessage(chatId, '❌ Nenhum pagamento encontrado.');
+    await bot.sendMessage(
+      chatId,
+      '❌ Nenhum pagamento encontrado.'
+    );
     break;
   }
 
-  await bot.sendMessage(chatId, '⏳ Verificando pagamento...');
+  await bot.sendMessage(
+    chatId,
+    '⏳ Verificando pagamento...'
+  );
 
   const resultado = await verificarPagamento(
     pagamentos[chatId].identifier
   );
 
-  console.log('RESULTADO SYNCPAY:');
-  console.log(resultado);
-
-  await bot.sendMessage(
-    chatId,
-    `📄 Retorno da API:\n\n${JSON.stringify(resultado, null, 2)}`
+  console.log(
+    'RESULTADO SYNCPAY:',
+    JSON.stringify(resultado)
   );
 
+  const status = resultado?.data?.status;
+
+  if (
+    status === 'completed' ||
+    status === 'paid' ||
+    status === 'approved'
+  ) {
+
+    await bot.sendMessage(
+      chatId,
+      '✅ Pagamento aprovado!\n\n🔥 Oferta especial liberada!'
+    );
+
+  } else {
+
+    await bot.sendMessage(
+      chatId,
+      `⏳ Pagamento ainda não identificado.\n\nStatus atual: ${status || 'pendente'}`
+    );
+
+  }
+
   break;
+  }
+
   }
 
   await bot.sendMessage(

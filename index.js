@@ -190,7 +190,7 @@ Reserve antes que as vagas acabem 👇`,
 
         const resultado = await verificarPagamento(pagamentos[chatId].identifier);
 
-        console.log('RESULTADO SYNCPAY:', JSON.stringify(resultado));
+        console.log('Status pagamento:', status);
 
         const status = resultado?.data?.status;
 
@@ -229,8 +229,7 @@ Se você já pagou, aguarde alguns segundos e clique em verificar novamente.`
     }
   } catch (error) {
     console.log('ERRO COMPLETO:');
-    console.log(error.response?.data);
-    console.log(error.message);
+    console.log('Erro:', error.message);
 
     await bot.sendMessage(
       chatId,

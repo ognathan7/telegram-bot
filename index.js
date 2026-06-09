@@ -243,13 +243,16 @@ async function criarPagamento(chatId, valor, produto) {
 
   const pix = await gerarPix(valor);
 
-  pagamentos[chatId] = {
-    pixCode: pix.pix_code,
-    identifier: pix.identifier,
-    valor,
-    produto
-  };
+  console.log('PIX RETORNO:', JSON.stringify(pix));
 
+pagamentos[chatId] = {
+  pixCode: pix.pix_code || pix.data?.pix_code,
+  identifier: pix.identifier || pix.data?.identifier || pix.data?.reference_id,
+  valor,
+  produto
+};
+
+console.log('IDENTIFIER SALVO:', pagamentos[chatId].identifier);
   await bot.sendMessage(
     chatId,
     `✅ Como realizar o pagamento:

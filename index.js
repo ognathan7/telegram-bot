@@ -99,7 +99,7 @@ O que você quer ver?`,
 
   await bot.sendAnimation(
     chatId,
-    path.join(__dirname, '5s.gif')
+    path.join(__dirname, 'imagem', '5s.gif'));
   );
 
   await bot.sendMessage(
@@ -131,7 +131,7 @@ case 'videochamada':
 
   await bot.sendAnimation(
     chatId,
-    path.join(__dirname, '5s.gif')
+    path.join(__dirname, 'imagem', '5s.gif'));
   );
 
   await bot.sendMessage(
@@ -158,7 +158,7 @@ case 'vip':
 
   await bot.sendAnimation(
     chatId,
-    path.join(__dirname, '5s.gif')
+    path.join(__dirname, 'imagem', '5s.gif'));
   );
 
   await bot.sendMessage(

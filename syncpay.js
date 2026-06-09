@@ -1,5 +1,3 @@
-console.log("CLIENT_ID:", process.env.SYNCPAY_CLIENT_ID);
-console.log("CLIENT_SECRET:", process.env.SYNCPAY_CLIENT_SECRET);
 
 const axios = require('axios');
 

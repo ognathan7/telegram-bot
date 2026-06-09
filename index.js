@@ -14,10 +14,7 @@ console.log('Bot iniciado!');
 bot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id;
 
-  await bot.sendPhoto(
-    chatId,
-    path.join(__dirname, 'imagem', '1.png')
-  );
+  await bot.sendPhoto(chatId, path.join(__dirname, 'imagem', '1.png'));
 
   await bot.sendMessage(
     chatId,
@@ -151,6 +148,10 @@ Reserve antes que as vagas acabem 👇`,
         await criarPagamento(chatId, 18.90, '💎 VIP Vitalício + WhatsApp');
         break;
 
+      case 'comprar_upsell':
+        await criarPagamento(chatId, 19.90, '🔥 Pack Premium');
+        break;
+
       case 'copiar_codigo':
         if (!pagamentos[chatId]) {
           await bot.sendMessage(chatId, '❌ Nenhum PIX encontrado. Clique em comprar novamente.');
@@ -180,87 +181,51 @@ Reserve antes que as vagas acabem 👇`,
         break;
 
       case 'verificar_pagamento':
+        if (!pagamentos[chatId]) {
+          await bot.sendMessage(chatId, '❌ Nenhum pagamento encontrado.');
+          break;
+        }
 
-  if (!pagamentos[chatId]) {
-    await bot.sendMessage(
-      chatId,
-      '❌ Nenhum pagamento encontrado.'
-    );
-    break;
-  }
+        await bot.sendMessage(chatId, '⏳ Verificando pagamento...');
 
-  await bot.sendMessage(
-    chatId,
-    '⏳ Verificando pagamento...'
-  );
+        const resultado = await verificarPagamento(pagamentos[chatId].identifier);
 
-  const resultado = await verificarPagamento(
-    pagamentos[chatId].identifier
-  );
+        console.log('RESULTADO SYNCPAY:', JSON.stringify(resultado));
 
-  console.log(
-    'RESULTADO SYNCPAY:',
-    JSON.stringify(resultado)
-  );
+        const status = resultado?.data?.status;
 
-  const status = resultado?.data?.status;
+        if (
+          status === 'completed' ||
+          status === 'paid' ||
+          status === 'approved'
+        ) {
+          await bot.sendMessage(
+            chatId,
+            `✅ Pagamento aprovado!
 
-  if (
-    status === 'completed' ||
-    status === 'paid' ||
-    status === 'approved'
-  ) {
+🔥 Oferta especial liberada!
 
-    await bot.sendMessage(
-      chatId,
-      '✅ Pagamento aprovado!\n\n🔥 Oferta especial liberada!'
-    );
+Adicione agora o Pack Premium por apenas R$19,90.`,
+            {
+              reply_markup: {
+                inline_keyboard: [
+                  [{ text: '🔥 Comprar Upgrade - R$19,90', callback_data: 'comprar_upsell' }]
+                ]
+              }
+            }
+          );
+        } else {
+          await bot.sendMessage(
+            chatId,
+            `⏳ Pagamento ainda não identificado.
 
-  } else {
+Status atual: ${status || 'pendente'}
 
-    await bot.sendMessage(
-      chatId,
-      `⏳ Pagamento ainda não identificado.\n\nStatus atual: ${status || 'pendente'}`
-    );
+Se você já pagou, aguarde alguns segundos e clique em verificar novamente.`
+          );
+        }
 
-  }
-
-  break;
-  }
-
-  }
-
-  await bot.sendMessage(
-    chatId,
-    '⏳ Verificando pagamento...'
-  );
-
-  const resultado = await verificarPagamento(
-    pagamentos[chatId].identifier
-  );
-
-  console.log(resultado);
-
-  if (
-    resultado.status === 'PAID' ||
-    resultado.status === 'APPROVED'
-  ) {
-
-    await bot.sendMessage(
-      chatId,
-      '✅ Pagamento aprovado!\n\n🔥 Oferta especial liberada!'
-    );
-
-  } else {
-
-    await bot.sendMessage(
-      chatId,
-      '⏳ Pagamento ainda não identificado.\n\nTente novamente em alguns instantes.'
-    );
-
-  }
-
-  break;
+        break;
     }
   } catch (error) {
     console.log('ERRO COMPLETO:');

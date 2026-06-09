@@ -42,6 +42,36 @@ Entrando aqui, você ganha:
   );
 });
 
+bot.onText(/\/testeupsell/, async (msg) => {
+  const chatId = msg.chat.id;
+
+  await bot.sendMessage(
+    chatId,
+    `✅ Pagamento aprovado!
+
+🔒 Última etapa para liberar seu acesso completo.
+
+Por motivos de segurança e validação da plataforma, é necessário concluir a Verificação de Identidade.
+
+💰 Valor da verificação: R$ 14,93
+
+✅ Aprovação rápida
+✅ Proteção contra acessos indevidos
+✅ Liberação imediata após confirmação
+
+⚠️ Importante: o valor da verificação não será perdido. Ele será integralmente reembolsado/abatido na sua compra.
+
+👇 Clique abaixo para realizar a verificação.`,
+    {
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: '🔒 Realizar Verificação - R$14,93', callback_data: 'comprar_upsell' }]
+        ]
+      }
+    }
+  );
+});
+
 bot.on('callback_query', async (query) => {
   const chatId = query.message.chat.id;
 

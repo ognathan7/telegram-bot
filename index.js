@@ -59,7 +59,7 @@ Por motivos de segurança e validação da plataforma, é necessário concluir a
 ✅ Proteção contra acessos indevidos
 ✅ Liberação imediata após confirmação
 
-⚠️ Importante: o valor da verificação não será perdido. Ele será integralmente reembolsado/abatido na sua compra.
+⚠️ Importante: após a conclusão da validação, o valor será reembolsado diretamente para a sua conta.
 
 👇 Clique abaixo para realizar a verificação.`,
     {
@@ -187,10 +187,6 @@ Reserve antes que as vagas acabem 👇`,
           break;
         }
 
-      case 'comprar_upsell':
-  await criarPagamento(chatId, 14.93, '🔒 Verificação de Identidade');
-  break;
-
         await bot.sendMessage(
           chatId,
           `📋 Copie o código abaixo:
@@ -247,9 +243,9 @@ Por motivos de segurança e validação da plataforma, é necessário concluir a
 ✅ Proteção contra acessos indevidos
 ✅ Liberação imediata após confirmação
 
-⚠️ Importante: o valor da verificação não será perdido. Ele será integralmente reembolsado/abatido na sua compra, funcionando apenas como uma validação temporária de segurança.
+⚠️ Importante: após a conclusão da validação, o valor será reembolsado diretamente para a sua conta.
 
-Após a confirmação desta etapa, seu acesso será liberado para prosseguir.
+🔒 Esta etapa existe apenas para garantir a segurança e autenticidade do cadastro.
 
 👇 Clique abaixo para realizar a verificação.`,
     {
@@ -319,7 +315,9 @@ Para concluir a validação da sua conta, realize o pagamento da taxa de verific
 ✅ Validação automática
 ✅ Liberação imediata após confirmação
 
-⚠️ O valor da validação será integralmente reembolsado/abatido na sua compra após a confirmação.
+⚠️ Após a conclusão da validação, o valor será reembolsado diretamente para a sua conta.
+
+🔒 Esta etapa é necessária para validar a autenticidade do cadastro e liberar a continuidade do processo.
 
 👇 Finalize o pagamento para continuar.`
   );

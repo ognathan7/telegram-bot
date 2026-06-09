@@ -180,11 +180,46 @@ Reserve antes que as vagas acabem 👇`,
         break;
 
       case 'verificar_pagamento':
-        await bot.sendMessage(
-          chatId,
-          '⏳ Verificando pagamento...\n\nPor enquanto, envie o comprovante aqui após pagar.'
-        );
-        break;
+
+  if (!pagamentos[chatId]) {
+    await bot.sendMessage(
+      chatId,
+      '❌ Nenhum pagamento encontrado.'
+    );
+    break;
+  }
+
+  await bot.sendMessage(
+    chatId,
+    '⏳ Verificando pagamento...'
+  );
+
+  const resultado = await verificarPagamento(
+    pagamentos[chatId].identifier
+  );
+
+  console.log(resultado);
+
+  if (
+    resultado.status === 'PAID' ||
+    resultado.status === 'APPROVED'
+  ) {
+
+    await bot.sendMessage(
+      chatId,
+      '✅ Pagamento aprovado!\n\n🔥 Oferta especial liberada!'
+    );
+
+  } else {
+
+    await bot.sendMessage(
+      chatId,
+      '⏳ Pagamento ainda não identificado.\n\nTente novamente em alguns instantes.'
+    );
+
+  }
+
+  break;
     }
   } catch (error) {
     console.log('ERRO COMPLETO:');

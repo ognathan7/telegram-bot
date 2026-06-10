@@ -4,6 +4,7 @@ const TelegramBot = require('node-telegram-bot-api');
 const QRCode = require('qrcode');
 const path = require('path');
 const { gerarPix, verificarPagamento } = require('./syncpay');
+const { enviarEventoTikTok } = require('./tiktok');
 
 const bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
 
@@ -244,6 +245,13 @@ Reserve antes que as vagas acabem 👇`,
           status === 'paid' ||
           status === 'approved'
         ) {
+
+          await enviarEventoTikTok(
+  'Purchase',
+  chatId,
+  pagamentos[chatId].valor,
+  pagamentos[chatId].produto
+);
           await bot.sendMessage(
             chatId,
             `✅ Pagamento aprovado!
@@ -297,6 +305,13 @@ Se você já pagou, aguarde alguns segundos e clique em verificar novamente.`
 
 async function criarPagamento(chatId, valor, produto) {
   await bot.sendMessage(chatId, '⏳ Gerando seu PIX...');
+
+  await enviarEventoTikTok(
+  'InitiateCheckout',
+  chatId,
+  valor,
+  produto
+);
 
   const pix = await gerarPix(valor);
 

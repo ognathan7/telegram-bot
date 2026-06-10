@@ -130,7 +130,7 @@ O que você quer ver?`,
       case 'videochamada':
         await bot.sendAnimation(
   chatId,
-  'https://raw.githubusercontent.com/ognathan7/telegram-bot/main/imagem/5s.gif'
+  'https://raw.githubusercontent.com/ognathan7/telegram-bot/main/imagem/8s.gif'
 );
 
         await bot.sendMessage(
@@ -154,7 +154,10 @@ Reserve antes que as vagas acabem 👇`,
         break;
 
       case 'vip':
-        await bot.sendAnimation(chatId, gifPath);
+        await bot.sendAnimation(
+  chatId,
+  'https://raw.githubusercontent.com/ognathan7/telegram-bot/main/imagem/4s.gif'
+);
 
         await bot.sendMessage(
           chatId,

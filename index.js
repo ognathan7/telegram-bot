@@ -97,7 +97,10 @@ O que você quer ver?`,
         break;
 
       case 'videos':
-        await bot.sendAnimation(chatId, gifPath);
+        await bot.sendAnimation(
+  chatId,
+  'https://raw.githubusercontent.com/ognathan7/telegram-bot/main/imagem/5s.gif'
+);
 
         await bot.sendMessage(
           chatId,
@@ -125,7 +128,10 @@ O que você quer ver?`,
         break;
 
       case 'videochamada':
-        await bot.sendAnimation(chatId, gifPath);
+        await bot.sendAnimation(
+  chatId,
+  'https://raw.githubusercontent.com/ognathan7/telegram-bot/main/imagem/5s.gif'
+);
 
         await bot.sendMessage(
           chatId,

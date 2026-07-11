@@ -34,7 +34,7 @@ function gerarCodigoPedido() {
   return `telegram-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
 }
 
-async function gerarPix(valor, cliente = {}) {
+async function gerarPix(valor) {
   console.log('Gerando PIX Mangofy...');
 
   const valorCentavos = converterParaCentavos(valor);
@@ -64,17 +64,13 @@ async function gerarPix(valor, cliente = {}) {
     ],
 
     customer: {
-      email: cliente.email || 'cliente@email.com',
-      name: cliente.name || cliente.nome || 'Cliente Telegram',
-      document:
-        cliente.document ||
-        cliente.cpf ||
-        '12345678900',
-      phone:
-        cliente.phone ||
-        cliente.telefone ||
-        '5511999999999',
-      ip: cliente.ip || '127.0.0.1'
+      customer: {
+  email: 'cliente@email.com',
+  name: 'Cliente Telegram',
+  document: '52998224725',
+  phone: '5511999999999',
+  ip: '127.0.0.1'
+},
     },
 
     pix: {

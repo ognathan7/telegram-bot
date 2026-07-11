@@ -3,7 +3,7 @@ require('dotenv').config();
 const TelegramBot = require('node-telegram-bot-api');
 const QRCode = require('qrcode');
 const path = require('path');
-const { gerarPix, verificarPagamento } = require('./syncpay');
+const { gerarPix, verificarPagamento } = require('./mangofy');
 const { enviarEventoTikTok } = require('./tiktok');
 
 const bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
@@ -235,8 +235,13 @@ Reserve antes que as vagas acabem 👇`,
 
         await bot.sendMessage(chatId, '⏳ Verificando pagamento...');
 
-        const resultado = await verificarPagamento(pagamentos[chatId].identifier);
-        const status = resultado?.data?.status;
+        const resultado = await verificarPagamento(pagamentos[chatId].paymentCode);
+
+const status =
+  resultado.payment_status ||
+  resultado.status ||
+  resultado.data?.payment_status ||
+  resultado.data?.status;
 
         console.log('Status pagamento:', status);
 
@@ -313,18 +318,31 @@ async function criarPagamento(chatId, valor, produto) {
   produto
 );
 
-  const pix = await gerarPix(valor);
+  const pix = await gerarPix(valor, {
+  name: 'Cliente Telegram',
+  email: 'cliente@email.com',
+  document: '52998224725',
+  phone: '5511999999999',
+  ip: '127.0.0.1'
+});
 
   console.log('PIX RETORNO:', JSON.stringify(pix));
 
   pagamentos[chatId] = {
-    pixCode: pix.pix_code || pix.data?.pix_code,
-    identifier: pix.identifier || pix.data?.identifier || pix.data?.reference_id,
-    valor,
-    produto
-  };
+  pixCode:
+    pix.pix?.pix_qrcode_text ||
+    pix.pix_qrcode_text ||
+    pix.data?.pix?.pix_qrcode_text,
 
-  console.log('IDENTIFIER SALVO:', pagamentos[chatId].identifier);
+  paymentCode:
+    pix.payment_code ||
+    pix.data?.payment_code,
+
+  valor,
+  produto
+};
+
+console.log('PAYMENT CODE:', pagamentos[chatId].paymentCode);
 
   if (produto === '🔒 Verificação de Identidade') {
     await bot.sendMessage(

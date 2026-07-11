@@ -331,12 +331,10 @@ async function criarPagamento(chatId, valor, produto) {
   pagamentos[chatId] = {
   pixCode:
     pix.pix?.pix_qrcode_text ||
-    pix.pix_qrcode_text ||
-    pix.data?.pix?.pix_qrcode_text,
+    pix.pix_qrcode_text,
 
   paymentCode:
-    pix.payment_code ||
-    pix.data?.payment_code,
+    pix.payment_code,
 
   valor,
   produto
